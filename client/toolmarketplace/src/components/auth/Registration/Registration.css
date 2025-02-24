@@ -1,0 +1,68 @@
+.registration-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease-in-out;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.registration-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.registration-form .form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.registration-input,
+.registration-select,
+.registration-textarea {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registration-input:focus,
+.registration-select:focus,
+.registration-textarea:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.registration-btn {
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.registration-btn:hover {
+    background: #0056b3;
+}
+
+.registration-photo-status {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Анимация появления */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
