@@ -1,0 +1,74 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.profile-title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-loading {
+    height: 60vh;
+}
+
+.profile-image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-image-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #007bff;
+    color: #fff;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.profile-image-edit:hover {
+    background: #0056b3;
+}
+
+.profile-input,
+.profile-textarea {
+    border-radius: 10px;
+    box-shadow: none;
+    border: 1px solid #ced4da;
+}
+
+.profile-input:focus,
+.profile-textarea:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #80bdff;
+}
+
+.profile-submit-btn {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px;
+}

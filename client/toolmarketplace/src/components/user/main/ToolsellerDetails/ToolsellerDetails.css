@@ -1,0 +1,199 @@
+.toolseller-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.toolseller-info {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.company-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.rating-section {
+    font-size: 1rem;
+}
+
+.logo-wrapper {
+    text-align: center;
+}
+
+.company-logo {
+    width: 300px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-details p {
+    font-size: 0.95rem;
+    margin: 5px 0;
+    color: #555;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #222;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.search-sort-section .form-control,
+.search-sort-section .form-select {
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid #ced4da;
+}
+
+.search-sort-section .form-control:focus,
+.search-sort-section .form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.products-row .product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.products-row .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.product-price,
+.product-category,
+.product-brand,
+.product-model,
+.product-condition,
+.product-warranty,
+.product-stock {
+    font-size: 0.85rem;
+    margin: 3px 0;
+    color: #555;
+}
+
+.add-to-cart-group {
+    margin-top: auto;
+}
+
+.quantity-input {
+    width: 80px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+.add-to-cart-btn {
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background: #0056b3;
+}
+
+.compare-btn {
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.no-products,
+.no-reviews,
+.not-found {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+    margin-top: 20px;
+}
+
+.review-item {
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.review-header {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.review-short {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.review-text {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.review-date {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Ошибка */
+.error-alert {
+    margin-top: 20px;
+}
