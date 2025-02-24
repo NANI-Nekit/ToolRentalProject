@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from '../../../api/axiosConfig';
-import { AuthContext } from '../../../context/AuthContext';
+import axios from '../../../redux context/api/axiosConfig';
+import { AuthContext } from '../../../redux context/AuthContext';
 import {
     Container,
     Button,

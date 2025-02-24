@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from '../../api/axiosConfig';
-import { AuthContext } from '../../context/AuthContext';
+import axios from '../../redux context/api/axiosConfig';
+import { AuthContext } from '../../redux context/AuthContext';
 import { Container, Form, Button, Image } from 'react-bootstrap';
 
 function EditToolsellerInfo() {

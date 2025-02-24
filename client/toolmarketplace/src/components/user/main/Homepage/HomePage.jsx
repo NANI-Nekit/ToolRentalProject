@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import axios from '../../../../api/axiosConfig';
+import axios from '../../../../redux context/api/axiosConfig';
 import { Link } from 'react-router-dom';
 import {
     Container,

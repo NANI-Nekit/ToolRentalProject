@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from '../../../api/axiosConfig';
-import { AuthContext } from '../../../context/AuthContext';
+import axios from '../../../redux context/api/axiosConfig';
+import { AuthContext } from '../../../redux context/AuthContext';
 import { Container, Row, Col, Form, Button, Image, Spinner, Card } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

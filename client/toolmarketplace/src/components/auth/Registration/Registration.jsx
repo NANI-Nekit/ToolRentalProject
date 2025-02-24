@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '../../../api/axiosConfig';
+import axios from '../../../redux context/api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';

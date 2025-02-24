@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorBoundary from './components/ErrorBoundary';
-import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './redux context/CartContext';
+import { AuthProvider } from './redux context/AuthContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

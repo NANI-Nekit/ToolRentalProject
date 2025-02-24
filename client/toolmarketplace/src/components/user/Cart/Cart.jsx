@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { CartContext } from '../../../context/CartContext';
+import { CartContext } from '../../../redux context/CartContext';
 import { Link } from 'react-router-dom';
 import OrderForm from '../orders/OrderForm';
 import { Container, Row, Col, Card, Button, Form, Spinner } from 'react-bootstrap';

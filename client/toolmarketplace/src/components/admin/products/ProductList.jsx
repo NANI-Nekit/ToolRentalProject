@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from '../../../api/axiosConfig';
+import axios from '../../../redux context/api/axiosConfig';
+import { AuthContext } from '../../../redux context/AuthContext';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
 import { Container, ListGroup, Button, Card } from 'react-bootstrap';
 import { FaPlusCircle, FaEdit, FaTrash } from 'react-icons/fa';
 import * as XLSX from 'xlsx';

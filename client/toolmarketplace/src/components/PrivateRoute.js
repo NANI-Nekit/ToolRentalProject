@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../redux context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 

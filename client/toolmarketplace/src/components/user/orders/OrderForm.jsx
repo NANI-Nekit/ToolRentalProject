@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from '../../../api/axiosConfig';
+import axios from '../../../redux context/api/axiosConfig';    
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
-import { CartContext } from '../../../context/CartContext';
+import { AuthContext } from '../../../redux context/AuthContext';
+import { CartContext } from '../../../redux context/CartContext';
 import { Container, Form, Button } from 'react-bootstrap';
 import './OrderForm.css';
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from '../../api/axiosConfig';
-import { AuthContext } from '../../context/AuthContext';
+import axios from '../../redux context/api/axiosConfig';
+import { AuthContext } from '../../redux context/AuthContext';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import './NavigationBar.css';
 
