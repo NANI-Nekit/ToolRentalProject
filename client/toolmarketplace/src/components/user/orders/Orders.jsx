@@ -230,6 +230,23 @@ function Orders() {
                                 <strong>Итоговая сумма:</strong>{' '}
                                 {order.total_cost || order.totalCost} ₽
                             </p>
+                            {/* Отображение типа заказа и данных аренды */}
+                            <p>
+                                <strong>Тип заказа:</strong>{' '}
+                                {order.orderType === 'rental' ? 'Аренда' : 'Покупка'}
+                            </p>
+                            {order.orderType === 'rental' && (
+                                <>
+                                    <p>
+                                        <strong>Начало аренды:</strong>{' '}
+                                        {order.rentalStartDate ? new Date(order.rentalStartDate).toLocaleDateString() : '—'}
+                                    </p>
+                                    <p>
+                                        <strong>Конец аренды:</strong>{' '}
+                                        {order.rentalEndDate ? new Date(order.rentalEndDate).toLocaleDateString() : '—'}
+                                    </p>
+                                </>
+                            )}
                             <h6>Товары:</h6>
                             <ul className="order-products">
                                 {order.OrderItems.map(item => (

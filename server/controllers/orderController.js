@@ -4,7 +4,7 @@ class OrderController {
 
     async createOrder(req, res) {
         try {
-            const { deliveryAddress, paymentMethod, discountPoints } = req.body;
+            const { deliveryAddress, paymentMethod, discountPoints, orderType, rentalStartDate, rentalEndDate } = req.body;
             const userId = req.user.userId;
 
             const user = await User.findByPk(userId);
@@ -26,9 +26,37 @@ class OrderController {
                 return res.status(400).json({ message: 'Ваша корзина пуста' });
             }
 
-            let totalCost = basket.BasketItems.reduce((acc, item) => {
-                return acc + parseFloat(item.Product.price) * item.quantity;
-            }, 0);
+            // Если заказ на аренду, проверяем, что в корзине ровно 1 товар и заданы сроки аренды
+            if (orderType === 'rental') {
+                if (basket.BasketItems.length !== 1) {
+                    return res.status(400).json({ message: 'Заказ на аренду может содержать только один товар' });
+                }
+                if (!rentalStartDate || !rentalEndDate) {
+                    return res.status(400).json({ message: 'При аренде необходимо указать сроки аренды' });
+                }
+            }
+
+            let totalCost = 0;
+
+            if (orderType === 'rental') {
+                // Вычисляем количество дней аренды (округляем в большую сторону)
+                const startDate = new Date(rentalStartDate);
+                const endDate = new Date(rentalEndDate);
+                const diffMs = endDate - startDate;
+                if (diffMs < 0) {
+                    return res.status(400).json({ message: 'Дата окончания аренды не может быть раньше даты начала' });
+                }
+                const rentalDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+                // Допустим, стоимость аренды за день составляет 10% от цены товара
+                const rentalRateFactor = 0.1;
+                // Так как для аренды в корзине должен быть ровно один товар, получаем его цену
+                const productPrice = parseFloat(basket.BasketItems[0].Product.price);
+                totalCost = productPrice * rentalDays * rentalRateFactor;
+            } else {
+                totalCost = basket.BasketItems.reduce((acc, item) => {
+                    return acc + parseFloat(item.Product.price) * item.quantity;
+                }, 0);
+            }
 
             const toolsellerIds = [...new Set(basket.BasketItems.map((item) => item.Product.toolsellerId))];
             if (toolsellerIds.length > 1) {
@@ -58,13 +86,20 @@ class OrderController {
                 orderDate: new Date(),
                 userId,
                 toolsellerId: toolsellerIds[0],
+                orderType, // 'purchase' или 'rental'
+                rentalStartDate: orderType === 'rental' ? rentalStartDate : null,
+                rentalEndDate: orderType === 'rental' ? rentalEndDate : null,
             });
 
             const orderItems = basket.BasketItems.map((item) => ({
                 orderId: order.id,
                 productId: item.productId,
                 quantity: item.quantity,
-                priceAtPurchase: item.Product.price,
+                // Если заказ аренды, фиксируем рассчитанную стоимость аренды в priceAtPurchase,
+                // иначе используем обычную цену товара.
+                priceAtPurchase: orderType === 'rental'
+                    ? totalCost
+                    : item.Product.price,
             }));
 
             await OrderItem.bulkCreate(orderItems);

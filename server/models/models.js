@@ -48,7 +48,7 @@ const Product = sequelize.define('Product', {
     warranty: { type: DataTypes.STRING, allowNull: true },
     stock: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
     photo: { type: DataTypes.STRING, allowNull: true },
-    documentation: { type: DataTypes.STRING, allowNull: true }, 
+    documentation: { type: DataTypes.STRING, allowNull: true },
     toolsellerId: { type: DataTypes.INTEGER, allowNull: false },
 }, { timestamps: true });
 
@@ -79,6 +79,14 @@ const Order = sequelize.define('Order', {
     paymentMethod: { type: DataTypes.STRING, allowNull: false },
     trackingNumber: { type: DataTypes.STRING, allowNull: true },
     orderDate: { type: DataTypes.DATE, allowNull: false },
+    // Новые поля для поддержки аренды
+    orderType: {
+        type: DataTypes.ENUM('purchase', 'rental'),
+        allowNull: false,
+        defaultValue: 'purchase'
+    },
+    rentalStartDate: { type: DataTypes.DATE, allowNull: true },
+    rentalEndDate: { type: DataTypes.DATE, allowNull: true },
 }, { timestamps: true });
 
 // Модель элемента заказа

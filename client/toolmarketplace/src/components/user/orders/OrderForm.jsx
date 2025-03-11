@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from '../../../redux context/api/axiosConfig';    
+import axios from '../../../redux context/api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../redux context/AuthContext';
 import { CartContext } from '../../../redux context/CartContext';
@@ -11,7 +11,7 @@ function OrderForm() {
     const { authData } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Получаем актуальные данные пользователя, как и в NavigationBar
+    // Получаем актуальные данные пользователя
     const [userData, setUserData] = useState(null);
     useEffect(() => {
         const fetchUserData = async () => {
@@ -36,12 +36,29 @@ function OrderForm() {
         deliveryAddress: '',
         description: '',
         paymentMethod: 'cash',
-        discountPoints: 0
+        discountPoints: 0,
+        orderType: 'purchase', // По умолчанию покупка
+        rentalStartDate: '',
+        rentalEndDate: '',
     });
     const [loading, setLoading] = useState(false);
 
-    // Вычисляем итоговую цену: общая сумма минус скидка (не менее 0)
-    const finalPrice = Math.max(totalAmount - Number(formData.discountPoints), 0);
+    // Вычисляем итоговую цену в зависимости от типа заказа
+    let computedFinalPrice = 0;
+    if (formData.orderType === 'rental' && formData.rentalStartDate && formData.rentalEndDate) {
+        const startDate = new Date(formData.rentalStartDate);
+        const endDate = new Date(formData.rentalEndDate);
+        const diffMs = endDate - startDate;
+        if (diffMs > 0) {
+            const rentalDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            const rentalRateFactor = 0.1; // 10% от цены за день
+            computedFinalPrice = Math.max(totalAmount * rentalDays * rentalRateFactor - Number(formData.discountPoints), 0);
+        } else {
+            computedFinalPrice = 0;
+        }
+    } else {
+        computedFinalPrice = Math.max(totalAmount - Number(formData.discountPoints), 0);
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,9 +75,25 @@ function OrderForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        // Если выбран режим аренды, можно добавить дополнительную валидацию
+        if (formData.orderType === 'rental') {
+            if (!formData.rentalStartDate || !formData.rentalEndDate) {
+                alert('Пожалуйста, укажите сроки аренды');
+                setLoading(false);
+                return;
+            }
+            const startDate = new Date(formData.rentalStartDate);
+            const endDate = new Date(formData.rentalEndDate);
+            if (endDate <= startDate) {
+                alert('Дата окончания аренды должна быть позже даты начала');
+                setLoading(false);
+                return;
+            }
+        }
+
         try {
-            // Можно добавить итоговую цену в данные заказа, если сервер это поддерживает
-            const dataToSend = { ...formData, finalPrice };
+            const dataToSend = { ...formData, finalPrice: computedFinalPrice };
             await axios.post('/api/orders', dataToSend, {
                 headers: {
                     Authorization: `Bearer ${authData.token}`,
@@ -104,6 +137,46 @@ function OrderForm() {
                         <option value="online">Онлайн-оплата</option>
                     </Form.Select>
                 </Form.Group>
+                <Form.Group controlId="formOrderType" className="mb-3">
+                    <Form.Label>Тип заказа</Form.Label>
+                    <Form.Select
+                        name="orderType"
+                        value={formData.orderType}
+                        onChange={handleChange}
+                    >
+                        <option value="purchase">Покупка</option>
+                        <option value="rental">Аренда</option>
+                    </Form.Select>
+                    {formData.orderType === 'rental' && (
+                        <Form.Text className="text-muted">
+                            При аренде заказ должен содержать только один товар.
+                        </Form.Text>
+                    )}
+                </Form.Group>
+                {formData.orderType === 'rental' && (
+                    <>
+                        <Form.Group controlId="formRentalStartDate" className="mb-3">
+                            <Form.Label>Дата начала аренды</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name="rentalStartDate"
+                                required={formData.orderType === 'rental'}
+                                value={formData.rentalStartDate}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formRentalEndDate" className="mb-3">
+                            <Form.Label>Дата окончания аренды</Form.Label>
+                            <Form.Control
+                                type="date"
+                                name="rentalEndDate"
+                                required={formData.orderType === 'rental'}
+                                value={formData.rentalEndDate}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </>
+                )}
                 <Form.Group controlId="formDiscountPoints" className="mb-3">
                     <Form.Label>Использовать баллы для скидки</Form.Label>
                     <Form.Range
@@ -122,7 +195,7 @@ function OrderForm() {
                     <Form.Label>Итоговая цена с учётом скидки</Form.Label>
                     <Form.Control
                         type="text"
-                        value={`${finalPrice} ₽`}
+                        value={`${computedFinalPrice} ₽`}
                         readOnly
                     />
                 </Form.Group>

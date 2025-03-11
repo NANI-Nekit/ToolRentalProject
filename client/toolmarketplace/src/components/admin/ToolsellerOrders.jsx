@@ -14,7 +14,7 @@ function ToolsellerOrders() {
     const [openDialog, setOpenDialog] = useState(false);
     const [orderToDelete, setOrderToDelete] = useState(null);
 
-    // Список статусов для фильтрации (на русском)
+    // Список статусов для фильтрации (на английском, как на сервере)
     const allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
     useEffect(() => {
@@ -105,6 +105,13 @@ function ToolsellerOrders() {
                 'Способ оплаты': order.paymentMethod,
                 'Номер отслеживания': order.trackingNumber || '—',
                 'Общая стоимость': order.totalCost + ' ₽',
+                'Тип заказа': order.orderType === 'rental' ? 'Аренда' : 'Покупка',
+                'Начало аренды': order.orderType === 'rental' && order.rentalStartDate
+                    ? new Date(order.rentalStartDate).toLocaleDateString()
+                    : '—',
+                'Конец аренды': order.orderType === 'rental' && order.rentalEndDate
+                    ? new Date(order.rentalEndDate).toLocaleDateString()
+                    : '—',
                 'Покупатель': buyer,
                 'Товары': orderItems,
             };
@@ -190,6 +197,9 @@ function ToolsellerOrders() {
                             <th>Способ оплаты</th>
                             <th>Номер отслеживания</th>
                             <th>Общая стоимость</th>
+                            <th>Тип заказа</th>
+                            <th>Начало аренды</th>
+                            <th>Конец аренды</th>
                             <th>Покупатель</th>
                             <th>Товары</th>
                             <th>Действия</th>
@@ -216,6 +226,17 @@ function ToolsellerOrders() {
                                 <td>{order.paymentMethod}</td>
                                 <td>{order.trackingNumber || '—'}</td>
                                 <td>{order.totalCost} ₽</td>
+                                <td>{order.orderType === 'rental' ? 'Аренда' : 'Покупка'}</td>
+                                <td>
+                                    {order.orderType === 'rental' && order.rentalStartDate
+                                        ? new Date(order.rentalStartDate).toLocaleDateString()
+                                        : '—'}
+                                </td>
+                                <td>
+                                    {order.orderType === 'rental' && order.rentalEndDate
+                                        ? new Date(order.rentalEndDate).toLocaleDateString()
+                                        : '—'}
+                                </td>
                                 <td>
                                     {order.User?.firstName} {order.User?.lastName}
                                     <br />
